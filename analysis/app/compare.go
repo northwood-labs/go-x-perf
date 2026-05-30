@@ -332,7 +332,7 @@ func (a *App) compareQuery(ctx context.Context, q string) *compareData {
 
 	// Prepare struct for template.
 	labels := make(map[string]bool)
-	// commonLabels are the key: value of every label that has an
+	// commonLabels are the key-value pairs for every label that has an
 	// identical value on every result.
 	commonLabels := make(benchfmt.Labels)
 	// Scan the first group for common labels.

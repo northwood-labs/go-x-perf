@@ -326,7 +326,7 @@ func hasStringColumn(t table.Grouping, col string) bool {
 //	one	1	2
 //	two	3	4
 //
-// and will turn in into a table like
+// and will turn it into a table like
 //
 //	one/value1	one/value2	two/value1	two/value2
 //	1		2		3		4
@@ -335,13 +335,13 @@ func hasStringColumn(t table.Grouping, col string) bool {
 type aggResults struct {
 	// Across is the name of the column whose values are the column prefix.
 	Across string
-	// Values is the name of the columns to split.
+	// Values contains the names of the columns to split.
 	Values []string
 	// Prefixes is filled in after calling agg with the name of each prefix that was found.
 	Prefixes []string
 }
 
-// agg implements ggstat.Aggregator and allows using a with ggstat.Agg.
+// agg implements ggstat.Aggregator and allows using aggResults with ggstat.Agg.
 func (a *aggResults) agg(input table.Grouping, output *table.Builder) {
 	var prefixes []string
 	rows := len(input.Tables())

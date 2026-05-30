@@ -24,10 +24,10 @@ func TestQuery(t *testing.T) {
 	app := createTestApp(t)
 	defer app.Close()
 
-	// Write 1024 test results to the database.  These results
+	// Write 1024 test results to the database. These results
 	// have labels named label0, label1, etc. Each label's value
 	// is an integer whose value is (record number) / (1 << label
-	// number).  So 1 record has each value of label0, 2 records
+	// number). So 1 record has each value of label0, 2 records
 	// have each value of label1, 4 records have each value of
 	// label2, etc. This allows writing queries that match 2^n records.
 	status := app.uploadFiles(t, func(mpw *multipart.Writer) {

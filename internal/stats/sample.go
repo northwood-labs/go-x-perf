@@ -14,9 +14,9 @@ type Sample struct {
 	// Xs is the slice of sample values.
 	Xs []float64
 
-	// Weights[i] is the weight of sample Xs[i].  If Weights is
-	// nil, all Xs have weight 1.  Weights must have the same
-	// length of Xs and all values must be non-negative.
+	// Weights[i] is the weight of sample Xs[i]. If Weights is
+	// nil, all Xs have weight 1. Weights must have the same
+	// length as Xs and all values must be non-negative.
 	Weights []float64
 
 	// Sorted indicates that Xs is sorted in ascending order.
@@ -110,7 +110,7 @@ func (s Sample) Sum() float64 {
 	return sum
 }
 
-// Weight returns the total weight of the Sasmple.
+// Weight returns the total weight of the Sample.
 func (s Sample) Weight() float64 {
 	if s.Weights == nil {
 		return float64(len(s.Xs))
@@ -164,7 +164,7 @@ func GeoMean(xs []float64) float64 {
 	return math.Exp(m)
 }
 
-// GeoMean returns the geometric mean of the Sample. All samples
+// GeoMean returns the geometric mean of the Sample. All sample
 // values must be positive.
 func (s Sample) GeoMean() float64 {
 	if len(s.Xs) == 0 || s.Weights == nil {

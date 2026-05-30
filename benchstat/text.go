@@ -113,8 +113,8 @@ func FormatCSV(w io.Writer, tables []*Table, norange bool) {
 }
 
 // trimCommonPathPrefix returns a string slice with common
-// path-separator-terminated prefixes removed.  Empty strings
-// are ignored and a singleton non-empty string is left unchanged
+// path-separator-terminated prefixes removed. Empty strings
+// are ignored and a singleton non-empty string is left unchanged.
 func trimCommonPathPrefix(ss []string) []string {
 	commonPrefixLen := -1
 	commonPrefix := ""

@@ -90,7 +90,7 @@ type DiscreteDist interface {
 // InvCDF returns the inverse CDF function of the given distribution
 // (also known as the quantile function or the percent point
 // function). This is a function f such that f(dist.CDF(x)) == x. If
-// dist.CDF is only weakly monotonic (that it, there are intervals
+// dist.CDF is only weakly monotonic (that is, there are intervals
 // over which it is constant) and y > 0, f returns the smallest x that
 // satisfies this condition. In general, the inverse CDF is not
 // well-defined for y==0, but for convenience if y==0, f returns the

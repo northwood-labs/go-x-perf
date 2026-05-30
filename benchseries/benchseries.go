@@ -17,9 +17,9 @@ import (
 	"golang.org/x/perf/benchproc"
 )
 
-// A Cell is the observations for part of a benchmark comparison.
+// A Cell contains the observations for part of a benchmark comparison.
 type Cell struct {
-	Values []float64 // Actual values observed for this cell (sorted).  Typically 1-100.
+	Values []float64 // Actual values observed for this cell (sorted). Typically 1-100.
 
 	// Residues is the set of residue Keys mapped to this cell.
 	// It is used to check for non-unique keys.
@@ -39,10 +39,10 @@ type Comparison struct {
 }
 
 // A ComparisonSummary is a summary of the comparison of a particular benchmark measurement
-// for two different versions of the toolchain.  Low, Center, and High are lower, middle and
+// for two different versions of the toolchain. Low, Center, and High are lower, middle, and
 // upper estimates of the value, most likely 2.5%ile, 50%ile, and 97.5%ile from a bootstrap
-// of the original measurement ratios.  Date is the (latest) date at which the measurements
-// were taken.  Present indicates that Low/Center/High/Date are valid; if comparison is non-nil,
+// of the original measurement ratios. Date is the (latest) date at which the measurements
+// were taken. Present indicates that Low/Center/High/Date are valid; if comparison is non-nil,
 // then there is a bootstrap that can be used or was used to initialize the other fields.
 // (otherwise the source was JSON or a database).
 type ComparisonSummary struct {
@@ -120,7 +120,7 @@ type Builder struct {
 	// one table per unit; each table maps from (benchmark,experiment) to a single trial of baseline vs one or more tests
 	tables map[unitTableKey]*table
 
-	// numHashBy to numerator order.
+	// hashToOrder maps numerator hashes to numerator order.
 	hashToOrder map[benchproc.Key]benchproc.Key
 
 	filter *benchproc.Filter
@@ -433,9 +433,9 @@ const (
 )
 
 // AllComparisonSeries converts the accumulated "experiments" into a slice of series of comparisons,
-// with one slice element per goos-goarch-unit.  The experiments need not have occurred in any
-// sensible order; this deals with that, including overlaps (depend on flag, either replaces old with
-// younger or combines, REPLACE IS PREFERRED and works properly with combining old summary data with
+// with one slice element per goos-goarch-unit. The experiments need not have occurred in any
+// sensible order; this deals with that, including overlaps (depending on the flag, it either replaces old with
+// younger data or combines, REPLACE IS PREFERRED and works properly with combining old summary data with
 // fresh benchmarking data) and possibly also with previously processed summaries.
 func (b *Builder) AllComparisonSeries(existing []*ComparisonSeries, dupeHow int) ([]*ComparisonSeries, error) {
 	old := make(map[string]*ComparisonSeries)
@@ -814,15 +814,15 @@ func norm(a []float64, l float64) float64 {
 // ChangeScore returns an indicator of the change and direction.
 // This is a heuristic measure of the lack of overlap between
 // two confidence intervals; minimum lack of overlap (i.e., same
-// confidence intervals) is zero.  Exact non-overlap, meaning
+// confidence intervals) is zero. Exact non-overlap, meaning
 // the high end of one interval is equal to the low end of the
-// other, is one.  A gap of size G between the two intervals
+// other, is one. A gap of size G between the two intervals
 // yields a score of 1 + G/M where M is the size of the smaller
 // interval (this penalizes a ChangeScore in noise, which is also a
 // ChangeScore). A partial overlap of size G yields a score of
 // 1 - G/M.
 //
-// Empty confidence intervals are problematic and produces infinities
+// Empty confidence intervals are problematic and can produce infinities
 // or NaNs.
 func ChangeScore(l1, c1, h1, l2, c2, h2 float64) float64 {
 	sign := 1.0
@@ -858,7 +858,7 @@ func withBootstrap(confidence float64, N int) compareFn {
 }
 
 // KSov returns the size-adjusted Kolmogorov-Smirnov statistic,
-// equal to D_{n,m} / sqrt((n+m)/n*m).  The result can be compared
+// equal to D_{n,m} / sqrt((n+m)/n*m). The result can be compared
 // to c(α) where α is the level at which the null hypothesis is rejected.
 //
 //	   α:  0.2   0.15  0.10  0.05  0.025 0.01  0.005 0.001
@@ -911,8 +911,8 @@ func (a *ComparisonSummary) HeurOverlap(b *ComparisonSummary, threshold float64)
 	return ChangeScore(a.Low, a.Center, a.High, b.Low, b.Center, b.High)
 }
 
-// AddSummaries computes the summary data (bootstrapped estimated of the specified
-// confidence interval) for the comparison series cs.  The 3rd parameter N specifies
+// AddSummaries computes the summary data (bootstrapped estimate of the specified
+// confidence interval) for the comparison series cs. The third parameter N specifies
 // the number of sampled bootstraps to use; 1000 is recommended, but 500 is good enough
 // for testing.
 func (cs *ComparisonSeries) AddSummaries(confidence float64, N int) {

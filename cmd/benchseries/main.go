@@ -143,7 +143,7 @@ func main() {
 		c.AddSummaries(confidence, 1000)
 	}
 
-	// Generate some output.  Options include CSV, JSON, PNG, perhaps also PDF and SVG.
+	// Generate some output. Options include CSV, JSON, PNG, perhaps also PDF and SVG.
 
 	var options benchseries.CsvOptions
 
