@@ -113,6 +113,12 @@ func TestParseNum(t *testing.T) {
 			t.Errorf("%s: want %v, got %v", x, want, got)
 		}
 	}
+	checkError := func(x string) {
+		t.Helper()
+		if got, err := parseNum(x); err == nil {
+			t.Errorf("%s: want error, got %v", x, got)
+		}
+	}
 
 	check("1", 1)
 	check("1B", 1)
@@ -130,4 +136,9 @@ func TestParseNum(t *testing.T) {
 	check("1E", 1000000000000000000)
 	check("1Z", 1000000000000000000000)
 	check("1Y", 1000000000000000000000000)
+	check("-1k", -1000)
+	check("+2MiB", 2<<20)
+	check("-1.5G", -1.5e9)
+	checkError("abc1Mxyz")
+	checkError("1kB/s")
 }
